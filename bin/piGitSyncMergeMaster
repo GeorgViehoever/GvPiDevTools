@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/bash
 #
 # Sync and merge to master from upstream, push it to clones. Afterwards, we are in master branch
 

@@ -7,3 +7,7 @@ cd $PCLDIR
 git push origin HEAD
 cd $PJSRDIR
 git push origin HEAD
+cd $XISFDIR
+git push origin HEAD
+cd $PIDEVTOOLSDIR
+git push origin HEAD

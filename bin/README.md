@@ -27,17 +27,41 @@ The following tools are provided:
 
 * g++-4.8.2 and gcc-4.8.2: Wrappers for g++ and gcc, so you can compile even if you dont have these exact compiler versions on your system. Version 4.8.2 are currently hardcoded in the makefiles, while Fedora 21 provides 4.9.2 . Of course, you are using a compiler different from the "official" version at your own risk. You can select between the system compiler and your private version of gcc4.8.2 by editing piEnv.
 
-##Commands for Git
+## Commands for Git
 
 The following commands support the usual clone->branch->dev->rebase->merge->dev->...->push cycle.
 They follow the model outlined in  http://stackoverflow.com/questions/20956154/whats-the-workflow-to-contribute-to-an-open-source-project-using-git-pull-reque and elsewhere
 
 * piGitClone: create local clones of your GitHub repositories. Assumes you already have created forks of the PixInsight repositories in your own GitHub space. Will also set the upstream repository to the official PixInsight repositories, so that piGitSyncMerge will get the current master branch from there.
 
-* piGitSyncMerge: sync, merge and push with Juan's master repositories. Done in master branch.
+* piGitSyncMergeMaster: sync, merge and push with Juan's master repositories. Done in master branch.
 
 * piGitPush: sync your local repositories to your forks on Github. You can then use Github to send pull requests for integrating your changes.
 
+## GIT Cycle
+
+Notes on the typical cyle:
+1. piGitClone
+2. piGitSyncMergeMaster
+3. git checkout -b myBranch
+4. develop as necessary
+5. git add filesAssNecessary
+6. git commit
+7. continue with 4
+7. piGitSyncMergeBranch
+8. piGitPush
+9. make pull request on github
+10. continue with 2 for new project
+11. git branch myBranch #to switch between branches with
+
+## Git Configuration
+
+Some notes on Git configuration:
+
+* git config --global user.name "Georg Viehoever"
+* git config --global user.email georg.viehoever@web.de
+* git config --global credential.helper cache
+* git config --global credential.helper 'cache --timeout=3600'
 
 ## License
 
