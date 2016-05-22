@@ -1,19 +1,25 @@
 #!/bin/bash
 #
-# Sync and merge to master from upstream. Afterwards, we are in master branch
+# Sync and merge to master from upstream, push it to clones. Afterwards, we are in master branch
+
+doit () {
+    git fetch upstream
+    git checkout master
+    git merge upstream/master
+    git push origin master
+}
 
 cd $PCLDIR
-git fetch upstream
-git checkout master
-git merge upstream/master
+doit
+
 cd $PJSRDIR
-git fetch upstream
-git checkout master
-git merge upstream/master
+doit
 
 cd $XISFDIR
-git fetch upstream
-git checkout master
-git merge upstream/master
+doit
+
+cd $PIDEVTOOLSDIR
+    git checkout master
+    git push origin master
 
 echo "in master branch now"

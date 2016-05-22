@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 #
 # Sets up the environment for PI developement.
 # Consider customizing some of the names and paths
@@ -12,10 +12,17 @@ export PI_GIT_BASE=$HOME/GitHub
 export PI_GIT_USERNAME="GeorgViehoever"
 # directory that contains the Pixinsight installation
 export PI_DIR=$HOME/PixInsight
-# directory for correct gcc version. PI seems to be fairly sensitive to the exact version
-# Version 4.9.2 coming with Fedora 21 produced executables that did not work. Now using
+# directory for correct gcc version. PI seems to be fairly sensitive to the exact version.
+# Version 4.9.2 coming with Fedora 21 produced executables that did not work. 
+# If not set, uses system gcc (gcc 4.8.5 coming with RHEL7.1).
+# Use of different gcc is possible, for instance
 # gcc4.8.2 compiled with ../gcc-4.8.2/configure --prefix=$HOME/gcc-4.8.2 -program-suffix="-4.8.2" --disable-multilib
-export PI_GCC_DIR=$HOME/gcc-4.8.2
+#export PI_GCC_DIR=$HOME/gcc-4.8.2
+
+# set a number of useful environment variables not related to PI
+setOtherEnv () {
+    export EDITOR emacs
+}
 
 # do plausibility check of paths
 checkDirs () {
@@ -33,6 +40,12 @@ checkDirs () {
 	echo "$PI_DIR apparently does not point to a PixInsight installation"
 	exit 1
     fi
+    if [ ! -x $PIDEVTOOLSDIR/bin/piGitClone ]
+    then
+	echo "$PIDEVTOOLSDIR apparently does not point to dev tools repository"
+	exit 1
+    fi
+
 }
 
 #
@@ -61,18 +74,23 @@ export PJSRPRODSCRIPTS=$PI_DIR/src/scripts
 export XISFDIR=$PI_GIT_BASE/XISF-specification
 
 # devtool directory. Added to PATH
-export PIDEVTOOLSDIR=$PCLDIR/devTools
+export PIDEVTOOLSDIR=$PI_GIT_BASE/GvPiDevTools
 # output of doxygen
 export PIDOXYGENDIR=$PI_GIT_BASE/doxy_html
 # doxygen configuration file
 export PIDOXYGENCONF=$PIDEVTOOLSDIR/piDoxygen.conf
 
 # add utilities directory to PATH
-export PATH=$PI_GCC_DIR/bin:$PIDEVTOOLSDIR:$PI_DIR/bin:$PATH
-
+if [ ! -z "$PI_GCC_DIR" ]
+then
+    export PATH=$PI_GCC_DIR/bin:$PATH
+fi
+export PATH=$PIDEVTOOLSDIR/bin:$PI_DIR/bin:$PATH
 # plausibility check
 checkDirs
 
+# set other environment variables
+setOtherEnv
 echo "Starting new $SHELL with environment variables set up for PCL/PJSR development."
 echo "Leave shell with 'exit' command"
 exec $SHELL
