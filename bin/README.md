@@ -45,7 +45,7 @@ Notes on the typical cyle:
 2. piGitSyncMergeMaster
 3. git checkout -b myBranch
 4. develop as necessary
-5. git add filesAssNecessary
+5. git add filesAssNecessary #use git status if necessary
 6. git commit
 7. continue with 4
 7. piGitSyncMergeBranch

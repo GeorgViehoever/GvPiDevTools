@@ -17,6 +17,6 @@ doit
 cd $XISFDIR
 doit
 
-cd $PIDEVTOOLSDIR
-doit
+#cd $PIDEVTOOLSDIR
+#doit
 
